@@ -59,12 +59,16 @@ const AuthForm = () => {
         const data = await response.json();
 
         if (response.ok) {
-          console.log(data);
+          const expTime = new Date(
+            new Date().getTime() + +data.expiresIn * 1000
+          );
+
+          setTimeout(dispatch(authActions.logoutHandler()), 2000);
 
           dispatch(
             authActions.loginHandler({
               token: data.idToken,
-              expirationTime: data.expiresIn,
+              expTime: expTime.toISOString(),
             })
           );
           history.replace("/");

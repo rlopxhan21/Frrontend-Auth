@@ -13,16 +13,29 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.isLoggedIn = true;
       localStorage.setItem("token", action.payload.token);
-      localStorage.setItem("timeRemaining", action.payload.expirationTime);
 
-      // setTimeout(this.logoutHandler, 1);
+      const calculateRemainingTime = (expTime) => {
+        const currentTime = new Date().getTime();
+        const adjTime = new Date(expTime).getTime();
+
+        const remainingDuration = adjTime - currentTime;
+
+        return remainingDuration;
+      };
+
+      const remainingTime = calculateRemainingTime(action.payload.expTime);
+
+      // setTimeout(() => {
+      //   state.token = "";
+      //   state.isLoggedIn = false;
+      //   localStorage.removeItem("token");
+      // }, 3000);
     },
 
     logoutHandler(state) {
       state.token = "";
       state.isLoggedIn = false;
       localStorage.removeItem("token");
-      localStorage.removeItem("timeRemaining");
     },
   },
 });
