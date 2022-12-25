@@ -1,12 +1,21 @@
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
+import { authActions } from "../../store/authSlice";
 
 import classes from "./MainNavigation.module.css";
 
 const MainNavigation = () => {
+  const history = useHistory();
+
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
-  console.log(isLoggedIn);
+  const onLogoutHandler = () => {
+    dispatch(authActions.logoutHandler());
+    // history.replace("/");
+  };
+
   return (
     <header className={classes.header}>
       <Link to="/">
@@ -27,7 +36,7 @@ const MainNavigation = () => {
 
           {isLoggedIn && (
             <li>
-              <button>Logout</button>
+              <button onClick={onLogoutHandler}>Logout</button>
             </li>
           )}
         </ul>

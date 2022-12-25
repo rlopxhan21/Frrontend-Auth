@@ -1,11 +1,14 @@
 import { useState, useRef } from "react";
 
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { authActions } from "../../store/authSlice";
 
 import classes from "./AuthForm.module.css";
 
 const AuthForm = () => {
+  const history = useHistory();
+
   const dispatch = useDispatch();
 
   const emailInputRef = useRef();
@@ -56,7 +59,7 @@ const AuthForm = () => {
         const data = await response.json();
         if (response.ok) {
           dispatch(authActions.loginHandler({ token: data.idToken }));
-          console.log(data);
+          history.replace("/");
         } else {
           throw new Error(data.error.message);
         }
