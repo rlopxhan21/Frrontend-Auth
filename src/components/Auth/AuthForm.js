@@ -31,14 +31,12 @@ const AuthForm = () => {
 
     let url;
 
-    // const API_KEY = process.env.FIREBASE_API_KEY;
+    const API_KEY = process.env.REACT_APP_FIREBASE_API_KEY;
 
     if (isLogin) {
-      url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCMJEexEtTHFYa26OaLq6Iske73CmmiOgE";
+      url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`;
     } else {
-      url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCMJEexEtTHFYa26OaLq6Iske73CmmiOgE";
+      url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
     }
 
     const sendData = async () => {

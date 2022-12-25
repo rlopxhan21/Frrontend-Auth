@@ -21,9 +21,10 @@ const ProfileForm = () => {
 
     const enteredNewPassword = newPasswordInputRef.current.value;
 
+    const API_KEY = process.env.REACT_APP_FIREBASE_API_KEY;
+
     const sendRequest = async () => {
-      const url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyCMJEexEtTHFYa26OaLq6Iske73CmmiOgE";
+      const url = `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${API_KEY}`;
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify({
