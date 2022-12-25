@@ -1,8 +1,13 @@
 import { useState, useRef } from "react";
 
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/authSlice";
+
 import classes from "./AuthForm.module.css";
 
 const AuthForm = () => {
+  const dispatch = useDispatch();
+
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
@@ -22,6 +27,8 @@ const AuthForm = () => {
     setIsLoading(true);
 
     let url;
+
+    // const API_KEY = process.env.FIREBASE_API_KEY;
 
     if (isLogin) {
       url =
@@ -47,10 +54,11 @@ const AuthForm = () => {
 
       try {
         const data = await response.json();
-        if (!response.ok) {
-          throw new Error(data.error.message);
-        } else {
+        if (response.ok) {
+          dispatch(authActions.loginHandler({ token: data.idToken }));
           console.log(data);
+        } else {
+          throw new Error(data.error.message);
         }
       } catch (error) {
         alert(error);
