@@ -57,8 +57,16 @@ const AuthForm = () => {
 
       try {
         const data = await response.json();
+
         if (response.ok) {
-          dispatch(authActions.loginHandler({ token: data.idToken }));
+          console.log(data);
+
+          dispatch(
+            authActions.loginHandler({
+              token: data.idToken,
+              expirationTime: data.expiresIn,
+            })
+          );
           history.replace("/");
         } else {
           throw new Error(data.error.message);
